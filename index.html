@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Potta+One&family=Teko:wght@300&display=swap" rel="stylesheet">
+<link rel="icon" href="">
+    <title>BusMall</title>
+
+</head>
+<body>
+  <header >
+    <div class="home-img"> </div>
+    <nav id="logo"> BusMall
+      <div class="social"> 
+        <i class="fab fa-facebook-square"></i>
+        <i class="fab fa-youtube-square"></i>
+        <i class="fab fa-twitter-square"></i>
+      </div>
+    </nav>
+    <div class="home-par">
+      <h1>Welcome to vote on some cars</h1>
+      <h4>We are going to collect the results to enhance our catalog for you</h4>
+    </div>
+        
+
+  </header>
+  <main>
+   
+    <form action="" id="form">
+        <fieldset>
+        <label>Insert the number of rounds that you want</label><br>
+         <input type="number" id="text" step="1" max="25" min="0"><br>
+         <button type="submit" id="round-btn" >Enter </button><br>
+         
+         </fieldset>
+    </form>
+    <div id="images-div">
+    <div><img id="left-image" src="" alt="" width="250" height="160" ></div>
+    <div><img id="middle-image" src="" alt="" width="250" height="160"></div>
+    <div><img id="right-image" src="" alt=""  width="250" height="160"> </div>
+    </div>
+
+    <form id="result">
+        <button type="submit" id="result-btn" visible="false"  >Show Results </button>
+        <ul id="results-list"></ul>
+        
+    </form>
+    <canvas id="myChart"></canvas>
+    
+
+  </main>
+  <footer>
+
+    
+      <p>
+        Bus Mall &copy; 2021 . All Rights Reserved.
+      </p>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="java.js"></script>
+  </footer>
+</body>
+</html>
