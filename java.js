@@ -1,17 +1,17 @@
 
 "use strict";
 
-var leftImageElement = document.getElementById("left-image");
-var middleImageElement = document.getElementById("middle-image");
-var rightImageElement = document.getElementById("right-image");
-var maxAttempts = 25;
-var userAttemptsCounter = 0;
-var leftImagei, middleImagei, rightImagei;
-var imagesNames = [];
-var imgVote = [];
-var statistics = [];
-var checkArray = [-1, -1, -1];
-var userNum;
+let leftImageElement = document.getElementById("left-image");
+let middleImageElement = document.getElementById("middle-image");
+let rightImageElement = document.getElementById("right-image");
+let maxAttempts = 25;
+let userAttemptsCounter = 0;
+let leftImagei, middleImagei, rightImagei;
+let imagesNames = [];
+let imgVote = [];
+let statistics = [];
+let checkArray = [-1, -1, -1];
+let userNum;
 
 function GetImage(name, source) {
   this.name = name;
@@ -45,10 +45,10 @@ new GetImage("Hennesey Venom GT", "images/sixteen.jpg");
 new GetImage("SSC Tuatara", "images/seventeen.jpg");
 new GetImage("Mazda Furai", "images/eighteen.jpg");
 new GetImage("Porsche 918 Spyder", "images/nineteen.jpg");
-var voteInLs, repeatInLs, maxAttemptsLs, localStorageArr;
+let voteInLs, repeatInLs, maxAttemptsLs, localStorageArr;
 renderRandomImages();
 
-var form = document.getElementById("form");
+let form = document.getElementById("form");
 form.addEventListener("submit", userRoundTimes);
 
 form.removeEventListener("submit", handleUserClick);
@@ -71,7 +71,7 @@ function handleUserClick(event) {
   } else {
     // handle end of voting
     document.getElementById("result-btn").style.visibility = "visible";
-    var result = document.getElementById("result");
+    let result = document.getElementById("result");
     result.addEventListener("submit", showResult);
 
     leftImageElement.removeEventListener("click", handleUserClick);
@@ -80,7 +80,7 @@ function handleUserClick(event) {
   }
 }
 
-// this function to calclate the number of rounds
+// this function to calculate the number of rounds
 function userRoundTimes(event) {
   event.preventDefault();
   maxAttempts = event.target[1].value;
@@ -90,11 +90,11 @@ function userRoundTimes(event) {
 function showResult(event) {
   event.preventDefault();
 
-  var resultsList = document.getElementById("results-list");
+  let resultsList = document.getElementById("results-list");
   resultsList.textContent = " ";
-  var resultItem;
+  let resultItem;
   percentage();
-  for (var i = 0; i < GetImage.prototype.allImages.length; i++) {
+  for (let i = 0; i < GetImage.prototype.allImages.length; i++) {
     resultItem = document.createElement("li");
     resultItem.textContent =
       GetImage.prototype.allImages[i].name +
@@ -112,8 +112,8 @@ function showResult(event) {
   }
 
   // the chart
-  var ctx = document.getElementById("myChart").getContext("2d");
-  var chart = new Chart(ctx, {
+  let ctx = document.getElementById("myChart").getContext("2d");
+  let chart = new Chart(ctx, {
     type: "bar",
     data: {
       labels: imagesNames,
@@ -173,7 +173,7 @@ function generateRandomi() {
 
 //to assgin the chart values
 function percentage() {
-  for (var i = 0; i < GetImage.prototype.allImages.length; i++) {
+  for (let i = 0; i < GetImage.prototype.allImages.length; i++) {
     GetImage.prototype.allImages[i].shownPercentage =
       (GetImage.prototype.allImages[i].repeat / maxAttempts) * 100;
     GetImage.prototype.allImages[i].votePercentage =
@@ -183,7 +183,7 @@ function percentage() {
 
 // this function to check the image if repeated from last round or not .
 function check(imgi) {
-  for (var i = 0; i < checkArray.length; i++) {
+  for (let i = 0; i < checkArray.length; i++) {
     if (imgi == checkArray[i]) {
       return true;
     }
@@ -210,8 +210,8 @@ function userLocalStorage() {
 // this function will check if localStorage empty or not , if not empty with run over the localStorage keys and then take the value for each key to convert the string object(localStorga object ) to Js object and retrive the objects for each user in log.
 function toJsObj() {
   if (localStorage.length != 0) {
-    for (var i = 0; i < localStorage.length; i++) {
-      var key = localStorage.key(i);
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
       if( key != "userCounter"){
       console.log(" the local Storage Content for ", key," is : ",JSON.parse(localStorage.getItem(key)));
       }
