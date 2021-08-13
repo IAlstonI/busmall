@@ -1,223 +1,40 @@
+class Pics {
+  clicks = 0;
+  timesShown = 0;
 
-"use strict";
-
-let leftImageElement = document.getElementById("left-image");
-let middleImageElement = document.getElementById("middle-image");
-let rightImageElement = document.getElementById("right-image");
-let maxAttempts = 25;
-let userAttemptsCounter = 0;
-let leftImagei, middleImagei, rightImagei;
-let imagesNames = [];
-let imgVote = [];
-let statistics = [];
-let checkArray = [-1, -1, -1];
-let userNum;
-
-function GetImage(name, source) {
-  this.name = name;
-  this.source = source;
-  this.votes = 0;
-  this.repeat = 0;
-  this.shownPercentage = 0;
-  this.votePercentage = 0;
-
-  imagesNames.push(name);
-  GetImage.prototype.allImages.push(this);
+  constructor(name, imgSrc) {
+      this.name = name;
+      this.imgSrc = imgSrc;
+  };
 }
 
-GetImage.prototype.allImages = [];
-new GetImage("Corvette Z06", "images/one.jpg");
-new GetImage("Bugatti Divo", "images/two.jpg");
-new GetImage("Nascar", "images/three.jpg");
-new GetImage("Chiron Super Sport", "images/four.jpg");
-new GetImage("Koenigsegg Jesko", "images/five.jpg");
-new GetImage("Dodge Demon", "images/six.jpg");
-new GetImage("McLaren Senna", "images/seven.jpg");
-new GetImage("LaFerrari", "images/eight.jpg");
-new GetImage("Lamborghini Veneno", "images/nine.jpg");
-new GetImage("Bugatti Bolide", "images/ten.jpg");
-new GetImage("Ultima RS", "images/eleven.jpg");
-new GetImage("Nissan GTR", "images/twelve.jpg");
-new GetImage("Lamborghini Sian", "images/thirteen.jpg");
-new GetImage("Aston Martin Vulcan", "images/fourteen.jpg");
-new GetImage("Dodge SRT Hellcat", "images/fifteen.jpg");
-new GetImage("Hennesey Venom GT", "images/sixteen.jpg");
-new GetImage("SSC Tuatara", "images/seventeen.jpg");
-new GetImage("Mazda Furai", "images/eighteen.jpg");
-new GetImage("Porsche 918 Spyder", "images/nineteen.jpg");
-let voteInLs, repeatInLs, maxAttemptsLs, localStorageArr;
-renderRandomImages();
+let leftPic = null;
+let middlePic = null;
+let rightPic = null;
+let totalclicks = 0
+let MaxClicks = 25
 
-let form = document.getElementById("form");
-form.addEventListener("submit", userRoundTimes);
+let allPics = [
 
-form.removeEventListener("submit", handleUserClick);
-leftImageElement.addEventListener("click", handleUserClick);
-middleImageElement.addEventListener("click", handleUserClick);
-rightImageElement.addEventListener("click", handleUserClick);
+new Pics("Corvette Z06", "images/one.jpg"), 
+new Pics("Bugatti Divo", "images/two.jpg"),
+new Pics("Nascar", "images/three.jpg"),
+new Pics("Chiron Super Sport", "images/four.jpg"),
+new Pics("Koenigsegg Jesko", "images/five.jpg"),
+new Pics("Dodge Demon", "images/six.jpg"),
+new Pics("McLaren Senna", "images/seven.jpg"),
+new Pics("LaFerrari", "images/eight.jpg"),
+new Pics("Lamborghini Veneno", "images/nine.jpg"),
+new Pics("Bugatti Bolide", "images/ten.jpg"),
+new Pics("Ultima RS", "images/eleven.jpg"),
+new Pics("Nissan GTR", "images/twelve.jpg"),
+new Pics("Lamborghini Sian", "images/thirteen.jpg"),
+new Pics("Aston Martin Vulcan", "images/fourteen.jpg"),
+new Pics("Dodge SRT Hellcat", "images/fifteen.jpg"),
+new Pics("Hennesey Venom GT", "images/sixteen.jpg"),
+new Pics("SSC Tuatara", "images/seventeen.jpg"),
+new Pics("Mazda Furai", "images/eighteen.jpg"),
+new Pics("Porsche 918 Spyder", "images/nineteen.jpg"),
 
-function handleUserClick(event) {
-  userAttemptsCounter++;
+]
 
-  if (userAttemptsCounter <= maxAttempts) {
-    if (event.target.id === "left-image") {
-      GetImage.prototype.allImages[leftImagei].votes++;
-    } else if (event.target.id === "middle-image") {
-      GetImage.prototype.allImages[middleImagei].votes++;
-    } else {
-      GetImage.prototype.allImages[rightImagei].votes++;
-    }
-    renderRandomImages();
-  } else {
-    // handle end of voting
-    document.getElementById("result-btn").style.visibility = "visible";
-    let result = document.getElementById("result");
-    result.addEventListener("submit", showResult);
-
-    leftImageElement.removeEventListener("click", handleUserClick);
-    middleImageElement.removeEventListener("click", handleUserClick);
-    rightImageElement.removeEventListener("click", handleUserClick);
-  }
-}
-
-// this function to calculate the number of rounds
-function userRoundTimes(event) {
-  event.preventDefault();
-  maxAttempts = event.target[1].value;
-}
-
-// to show the result after clicked the dhow result btn
-function showResult(event) {
-  event.preventDefault();
-
-  let resultsList = document.getElementById("results-list");
-  resultsList.textContent = " ";
-  let resultItem;
-  percentage();
-  for (let i = 0; i < GetImage.prototype.allImages.length; i++) {
-    resultItem = document.createElement("li");
-    resultItem.textContent =
-      GetImage.prototype.allImages[i].name +
-      " had " +
-      GetImage.prototype.allImages[i].votes +
-      " votes and " +
-      GetImage.prototype.allImages[i].repeat +
-      " times";
-    resultsList.appendChild(resultItem);
-    imgVote.push(GetImage.prototype.allImages[i].votePercentage);
-    statistics.push(GetImage.prototype.allImages[i].shownPercentage);
-    //percentage(GetImage.prototype.allImages[i]);
-
-    //voteAndRepeatLocalStorage(GetImage.prototype.allImages[i]);
-  }
-
-  // the chart
-  let ctx = document.getElementById("myChart").getContext("2d");
-  let chart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: imagesNames,
-      datasets: [
-        {
-          label: "Votes",
-          backgroundColor: "rgb(100, 17, 17)",
-          borderColor: "black",
-          data: imgVote,
-        },
-
-        {
-          label: "showns",
-          backgroundColor: "rgb(94, 77, 77)",
-          borderColor: "black",
-          data: statistics,
-        },
-      ],
-    },
-  });
-  userLocalStorage();
-}
-
-// this function to display the 3 differnet images
-function renderRandomImages() {
-  do {
-    leftImagei = generateRandomi();
-    rightImagei = generateRandomi();
-    middleImagei = generateRandomi();
-  } while (
-    leftImagei == rightImagei ||
-    leftImagei == middleImagei ||
-    middleImagei == rightImagei ||
-    check(leftImagei) ||
-    check(middleImagei) ||
-    check(rightImagei)
-  );
-
-  checkArray[0] = leftImagei;
-  checkArray[1] = rightImagei;
-  checkArray[2] = middleImagei;
-
-  console.log(leftImagei, rightImagei, middleImagei, "result");
-
-  leftImageElement.src = GetImage.prototype.allImages[leftImagei].source;
-  GetImage.prototype.allImages[leftImagei].repeat++;
-  middleImageElement.src = GetImage.prototype.allImages[middleImagei].source;
-  GetImage.prototype.allImages[middleImagei].repeat++;
-  rightImageElement.src = GetImage.prototype.allImages[rightImagei].source;
-  GetImage.prototype.allImages[rightImagei].repeat++;
-}
-
-//this function to create a random number to choose the images
-function generateRandomi() {
-  return Math.floor(Math.random() * GetImage.prototype.allImages.length);
-}
-
-//to assgin the chart values
-function percentage() {
-  for (let i = 0; i < GetImage.prototype.allImages.length; i++) {
-    GetImage.prototype.allImages[i].shownPercentage =
-      (GetImage.prototype.allImages[i].repeat / maxAttempts) * 100;
-    GetImage.prototype.allImages[i].votePercentage =
-      (GetImage.prototype.allImages[i].votes / maxAttempts) * 100;
-  }
-}
-
-// this function to check the image if repeated from last round or not .
-function check(imgi) {
-  for (let i = 0; i < checkArray.length; i++) {
-    if (imgi == checkArray[i]) {
-      return true;
-    }
-  }
-  return false;
-}
-
-// this function to store each user choices in localStorage after converting the js object to localStroage object , will save the object with users numbers .
-function userLocalStorage() {
-  if (localStorage.length == 0) {
-    userNum = 1;
-  } else {
-    userNum = localStorage.getItem("userCounter");
-  }
-  localStorage.setItem(
-    "user " + userNum,
-    JSON.stringify(GetImage.prototype.allImages)
-  );
-  userNum++;
-  localStorage.setItem("userCounter", userNum);
-  
-}
-
-// this function will check if localStorage empty or not , if not empty with run over the localStorage keys and then take the value for each key to convert the string object(localStorga object ) to Js object and retrive the objects for each user in log.
-function toJsObj() {
-  if (localStorage.length != 0) {
-    for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
-      if( key != "userCounter"){
-      console.log(" the local Storage Content for ", key," is : ",JSON.parse(localStorage.getItem(key)));
-      }
-    }
-    //console.log(localStorage.length);
-  } else console.log(" the local Storage is Empty!");
-}
-
-toJsObj();
